@@ -1,18 +1,17 @@
-package com.example.plant_recognition_aplication.photo
+package com.example.plantRecognitionApplication.about
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import com.example.plant_recognition_aplication.R
+import com.example.plantRecognitionApplication.R
 
 
-class PhotoFragment : Fragment() {
+class AboutFragment : Fragment() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
     }
 
     override fun onCreateView(
@@ -20,7 +19,8 @@ class PhotoFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_photo, container, false)
+        return inflater.inflate(R.layout.fragment_about, container, false)
     }
+
 
 }

@@ -13,7 +13,7 @@ android {
     }
 
     defaultConfig {
-        applicationId "com.example.plant_recognition_aplication"
+        applicationId "com.example.plantRecognitionApplication"
         minSdk 24
         targetSdk 31
         versionCode 1

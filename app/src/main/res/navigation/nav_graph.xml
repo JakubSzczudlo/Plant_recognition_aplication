@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/menuFragment"
-        android:name="com.example.plant_recognition_aplication.menu.MenuFragment"
+        android:name="com.example.plantRecognitionApplication.menu.MenuFragment"
         android:label="MenuFragment" >
         <action
             android:id="@+id/action_menuFragment_to_photoFragment"
@@ -15,7 +15,7 @@
     </fragment>
     <fragment
         android:id="@+id/photoFragment"
-        android:name="com.example.plant_recognition_aplication.photo.PhotoFragment"
+        android:name="com.example.plantRecognitionApplication.photo.PhotoFragment"
         android:label="fragment_photo"
         tools:layout="@layout/fragment_photo" />
 </navigation>

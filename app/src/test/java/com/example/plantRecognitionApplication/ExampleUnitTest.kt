@@ -1,4 +1,4 @@
-package com.example.plant_recognition_aplication
+package com.example.plantRecognitionApplication
 
 import org.junit.Test
 
