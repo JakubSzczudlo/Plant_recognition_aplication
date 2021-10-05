@@ -4,4 +4,8 @@
     <string name="plant_description">Random Plant</string>
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="justClick">Just Click!</string>
+    <string name="clickIt">Just click!</string>
+    <string name="takePhoto">Take Photo!</string>
+    <string name="viewPhoto">View Photo!</string>
 </resources>
