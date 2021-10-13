@@ -19,7 +19,9 @@ import android.os.Environment
 import androidx.core.content.FileProvider
 import androidx.fragment.app.FragmentActivity
 import androidx.lifecycle.MutableLiveData
+import java.io.ByteArrayOutputStream
 import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
@@ -28,13 +30,12 @@ import java.util.*
 const val REQUEST_IMAGE_CAPTURE =42
 private val bitmap_photo = MutableLiveData<Bitmap>()
 private val photo_flag = MutableLiveData<Boolean>()
+private val pathToPhoto = MutableLiveData<String>()
 
 
 class PhotoFragment : Fragment() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
-
 
     }
 
@@ -58,24 +59,56 @@ class PhotoFragment : Fragment() {
             if(photo_flag.value == true)
             binding.imageView.setImageBitmap(bitmap_photo.value)
         }
-
         return binding.root
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
+        /* If the intent was induced the photo is saved in file and MutableLiveData" */
         if (requestCode == REQUEST_IMAGE_CAPTURE) {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             bitmap_photo.value = imageBitmap
             photo_flag.value = true
+            bitmapToFile(imageBitmap,"Test")
         }
     }
 
     private fun checkingCamera(context: Context?, activity : FragmentActivity?){
+        /* Test if the given smartphone have built-in camera*/
         val packageManager = context?.packageManager
         if (!packageManager?.hasSystemFeature(PackageManager.FEATURE_CAMERA_ANY)!!) {
             Toast.makeText(activity, "This device does not have a camera.", Toast.LENGTH_SHORT)
                 .show()
             return
+        }
+    }
+
+
+
+
+    private fun bitmapToFile(imageBitmap: Bitmap, fileNameToSave: String): File? {
+        /* Saving bitmap to file for later use */
+        var file: File? = null
+        //Toast.makeText(activity, "Worked", Toast.LENGTH_SHORT).show()
+        return try {
+            val path = Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave
+            pathToPhoto.value = path
+            file = File(path)
+            file.createNewFile()
+
+            //Convert bitmap to byte array
+            val stream = ByteArrayOutputStream()
+            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
+            val bitmapdata = stream.toByteArray()
+
+            //write the bytes in file
+            val fos = FileOutputStream(file)
+            fos.write(bitmapdata)
+            fos.flush()
+            fos.close()
+            file
+        } catch (e: Exception) {
+            e.printStackTrace()
+            file
         }
     }
 
