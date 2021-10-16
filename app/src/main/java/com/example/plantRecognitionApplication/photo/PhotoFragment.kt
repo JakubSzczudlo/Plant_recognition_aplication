@@ -68,7 +68,7 @@ class PhotoFragment : Fragment() {
             val imageBitmap = data?.extras?.get("data") as Bitmap
             bitmap_photo.value = imageBitmap
             photo_flag.value = true
-            bitmapToFile(imageBitmap,"Test")
+            //bitmapToFile(imageBitmap,"Test")
         }
     }
 
@@ -84,7 +84,7 @@ class PhotoFragment : Fragment() {
 
 
 
-
+/*
     private fun bitmapToFile(imageBitmap: Bitmap, fileNameToSave: String): File? {
         /* Saving bitmap to file for later use */
         var file: File? = null
@@ -111,6 +111,53 @@ class PhotoFragment : Fragment() {
             file
         }
     }
+
+ */
+
+    @Throws(IOException::class)
+    private fun createImageFile(context: Context?): File {
+        // Create an image file name
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        ).apply {
+            // Save a file: path for use with ACTION_VIEW intents
+            pathToPhoto.value = absolutePath
+        }
+    }
+
+    private fun dispatchTakePictureIntent(context: Context?) {
+        Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
+            // Ensure that there's a camera activity to handle the intent
+            takePictureIntent.resolveActivity(context?.packageManager!!)?.also {
+                // Create the File where the photo should go
+                val photoFile: File? = try {
+                    createImageFile(context)
+                } catch (ex: IOException) {
+                    // Error occurred while creating the File
+                    Toast.makeText(activity, "Something went wrong", Toast.LENGTH_SHORT)
+                        .show()
+                    null
+                }
+                // Continue only if the File was successfully created
+                photoFile?.also {
+                    val photoURI: Uri = FileProvider.getUriForFile(
+                        context,
+                        "com.example.android.fileprovider",
+                        it
+                    )
+                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
+                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
+                }
+            }
+        }
+    }
+
+
+
 
 /*
 private fun savingPhoto(){
