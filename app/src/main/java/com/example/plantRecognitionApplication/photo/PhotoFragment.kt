@@ -14,6 +14,7 @@ import androidx.databinding.DataBindingUtil
 import com.example.plantRecognitionApplication.R
 import com.example.plantRecognitionApplication.databinding.FragmentPhotoBinding
 import android.content.pm.PackageManager
+import android.graphics.BitmapFactory
 import android.net.Uri
 import android.os.Environment
 import androidx.core.content.FileProvider
@@ -83,37 +84,6 @@ class PhotoFragment : Fragment() {
     }
 
 
-
-/*
-    private fun bitmapToFile(imageBitmap: Bitmap, fileNameToSave: String): File? {
-        /* Saving bitmap to file for later use */
-        var file: File? = null
-        //Toast.makeText(activity, "Worked", Toast.LENGTH_SHORT).show()
-        return try {
-            val path = Environment.getExternalStorageDirectory().toString() + File.separator + fileNameToSave
-            pathToPhoto.value = path
-            file = File(path)
-            file.createNewFile()
-
-            //Convert bitmap to byte array
-            val stream = ByteArrayOutputStream()
-            imageBitmap.compress(Bitmap.CompressFormat.JPEG, 100, stream)
-            val bitmapdata = stream.toByteArray()
-
-            //write the bytes in file
-            val fos = FileOutputStream(file)
-            fos.write(bitmapdata)
-            fos.flush()
-            fos.close()
-            file
-        } catch (e: Exception) {
-            e.printStackTrace()
-            file
-        }
-    }
-
- */
-
     @Throws(IOException::class)
     private fun createImageFile(context: Context?): File {
         // Create an image file name
@@ -155,62 +125,11 @@ class PhotoFragment : Fragment() {
             }
         }
     }
-
-
-
-
-/*
-private fun savingPhoto(){
-    val takePictureIntent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
-
-}
-
-lateinit var currentPhotoPath: String
-
-@Throws(IOException::class)
-private fun createImageFile(): File {
-    // Create an image file name
-    val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-    val storageDir: File? = activity?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
-    return File.createTempFile(
-        "JPEG_${timeStamp}_", /* prefix */
-        ".jpg", /* suffix */
-        storageDir /* directory */
-    ).apply {
-        // Save a file: path for use with ACTION_VIEW intents
-        currentPhotoPath = absolutePath
-    }
-}
-
-private fun dispatchTakePictureIntent(context: Context?,activity : FragmentActivity?) {
-    Intent(MediaStore.ACTION_IMAGE_CAPTURE).also { takePictureIntent ->
-        // Ensure that there's a camera activity to handle the intent
-        activity?.let {
-            takePictureIntent.resolveActivity(it.packageManager)?.also {
-                // Create the File where the photo should go
-                val photoFile: File? = try {
-                    createImageFile()
-                } catch (ex: IOException) {
-                    // Error occurred while creating the File
-                    Toast.makeText(activity, "Not working", Toast.LENGTH_SHORT)
-                        .show()
-                    null
-                }
-                // Continue only if the File was successfully created
-                photoFile?.also {
-                    val photoURI: Uri? = context?.let { it1 ->
-                        FileProvider.getUriForFile(
-                            it1,
-                            "com.example.android.fileprovider",
-                            it
-                        )
-                    }
-                    takePictureIntent.putExtra(MediaStore.EXTRA_OUTPUT, photoURI)
-                    startActivityForResult(takePictureIntent, REQUEST_IMAGE_CAPTURE)
-                }
-            }
+    private fun setPic(binding: FragmentPhotoBinding) {
+        BitmapFactory.decodeFile(pathToPhoto.value)?.also { bitmap ->
+            binding.imageView.setImageBitmap(bitmap)
         }
     }
-}
-*/
+
+
 }
