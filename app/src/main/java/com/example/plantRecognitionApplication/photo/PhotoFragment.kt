@@ -73,7 +73,7 @@ class PhotoFragment : Fragment() {
             )
             var rotate : Float = 0.0F
             when(orientation) {
-                ExifInterface.ORIENTATION_ROTATE_270 -> rotate = 270.0F
+                ExifInterface.ORIENTATION_ROTATE_270 -> rotate = -90.0F
                 ExifInterface.ORIENTATION_ROTATE_180 -> rotate = 180.0F
                 ExifInterface.ORIENTATION_ROTATE_90 -> rotate = 90.0F
             }
