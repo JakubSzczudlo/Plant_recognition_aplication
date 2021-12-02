@@ -42,9 +42,6 @@ const val BATCH_SIZE: Int = 1
 
 class PhotoFragment : Fragment() {
 
-    //private lateinit var classifier: Classifier
-
-    //private lateinit var assetManager: AssetManager
 
 
     private lateinit var viewModel: PhotoViewModel
@@ -93,9 +90,7 @@ class PhotoFragment : Fragment() {
         })
         viewModel.recflag.observe(viewLifecycleOwner, Observer { recDone ->
             if (recDone) {
-                var bitmap = BitmapFactory.decodeFile(viewModel.pathToPhoto.value)
-                val recognitions = classifier.recognize(bitmap)
-                val txt = recognitions.joinToString(separator = "\n")
+                val txt = viewModel.makeRecognitions(classifier)
                 //Toast.makeText(context, txt, Toast.LENGTH_LONG).show()
                 binding.results.text = txt
                 binding.ResultTitle.visibility = View.VISIBLE

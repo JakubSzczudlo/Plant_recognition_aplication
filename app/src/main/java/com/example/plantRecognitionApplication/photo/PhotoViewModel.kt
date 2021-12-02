@@ -1,27 +1,18 @@
 package com.example.plantRecognitionApplication.photo
 
-import android.R.attr
 import android.content.Context
 import android.graphics.Bitmap
 import android.icu.text.DateFormat.getDateInstance
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
-import android.widget.Toast
 import androidx.core.content.FileProvider
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
-import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
-import android.R.attr.data
 import android.graphics.BitmapFactory
-import android.provider.MediaStore.Images.Thumbnails.getThumbnail
-import android.provider.MediaStore
-
-
-
 
 
 class PhotoViewModel : ViewModel() {
@@ -97,15 +88,10 @@ class PhotoViewModel : ViewModel() {
                 }
             }
 
-    fun makeRecognitions(classifier: Classifier,context: Context): String{
-        if(photoFlag.value == true) {
-            var bitmap = BitmapFactory.decodeFile(pathToPhoto.value)
-
-            val recognitions = classifier.recognize(bitmap)
-            val txt = recognitions.joinToString(separator = "\n")
-            return txt
-        }
-        return "Mistake"
+    fun makeRecognitions(classifier: Classifier): String {
+        var bitmap = BitmapFactory.decodeFile(_pathToPhoto.value)
+        val recognitions = classifier.recognize(bitmap)
+        return recognitions.joinToString(separator = "\n")
     }
 
 

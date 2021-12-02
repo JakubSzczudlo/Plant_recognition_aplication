@@ -60,7 +60,6 @@ class Classifier(assetManager: AssetManager) {
         val recognitions = mutableListOf<Recognition>()
 
         labels.forEachIndexed { index, label ->
-
                 val probability = result[0][index]
                 recognitions.add(Recognition(label, probability))
             }
