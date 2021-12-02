@@ -96,7 +96,9 @@ class PhotoFragment : Fragment() {
                 var bitmap = BitmapFactory.decodeFile(viewModel.pathToPhoto.value)
                 val recognitions = classifier.recognize(bitmap)
                 val txt = recognitions.joinToString(separator = "\n")
-                Toast.makeText(context, txt, Toast.LENGTH_LONG).show()
+                //Toast.makeText(context, txt, Toast.LENGTH_LONG).show()
+                binding.results.text = txt
+                binding.ResultTitle.visibility = View.VISIBLE
 
             }
 
