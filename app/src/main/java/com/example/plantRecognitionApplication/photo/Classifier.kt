@@ -40,7 +40,7 @@ class Classifier(assetManager: AssetManager) {
 
         val pixelValues = IntArray(MODEL_INPUT_SIZE * MODEL_INPUT_SIZE)
         bitmap.getPixels(pixelValues, 0, bitmap.width, 0, 0, bitmap.width, bitmap.height)
-
+        /* Canal alfa deleting*/
         var pixel = 0
         for (i in 0 until MODEL_INPUT_SIZE) {
             for (j in 0 until MODEL_INPUT_SIZE) {
