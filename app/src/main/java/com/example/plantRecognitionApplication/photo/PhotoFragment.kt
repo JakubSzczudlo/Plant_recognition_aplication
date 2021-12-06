@@ -33,12 +33,6 @@ import java.nio.MappedByteBuffer
 import java.nio.channels.FileChannel
 
 
-const val INPUT_SIZE: Int = 224
-const val BYTES_PER_CHANNEL: Int = 4
-const val PIXEL_SIZE: Int = 3
-const val BATCH_SIZE: Int = 1
-
-
 
 class PhotoFragment : Fragment() {
 

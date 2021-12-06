@@ -9,4 +9,9 @@
     <string name="takePhoto">Take Photo!</string>
     <string name="viewPhoto">View Photo!</string>
     <string name="Result_title">Recognition results:</string>
+    <string name="questionMark">\?</string>
+    <string name="Author_name">Author: Jakub Szczudło</string>
+    <string name="small_text">Application created for an engineering thesis</string>
+    <string name="description_part_1">"The software allows you to use a convolutional neural network to recognize a plant species by its fruit or flower.The total number of supported classes is 135 and the accuracy of the network is about 99%. "</string>
+    <string name="description_part_2">To use the application, press the START button in the menu and then the TAKE PHOTO!  button and take a picture of the flower or fruit. After the photo is loaded correctly, the results of the neural network will appear below it.</string>
 </resources>

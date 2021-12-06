@@ -2,4 +2,6 @@
 <resources>
     <dimen name="Large_letter">25sp</dimen>
     <dimen name="photoHeight">400dp</dimen>
+    <dimen name="small_text">20sp</dimen>
+    <dimen name="smaller_text">16sp</dimen>
 </resources>
