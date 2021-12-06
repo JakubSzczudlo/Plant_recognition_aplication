@@ -7,5 +7,5 @@ data class Recognition(
     val probability: Float
 ) {
     override fun toString() =
-        "$name : ${((probability * 10000.0).roundToInt()/100.0)}%"
+        "$name: ${((probability * 10000.0).roundToInt()/100.0)}%"
 }

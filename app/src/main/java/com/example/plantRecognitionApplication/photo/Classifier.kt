@@ -2,7 +2,6 @@ package com.example.plantRecognitionApplication.photo
 
 import android.content.res.AssetManager
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
 import org.tensorflow.lite.Interpreter
 import java.io.BufferedReader
 import java.io.FileInputStream
@@ -19,10 +18,10 @@ class Classifier(assetManager: AssetManager) {
     private val model: Interpreter
 
     init {
-        model = Interpreter(getModelByteBuffer(assetManager, MODEL_PATH))
+        model = Interpreter(getModel(assetManager, MODEL_PATH))
         labels = getLabels(assetManager, LABELS_PATH)
     }
-
+    /*Function responsible for generating recognitions from given bitmap*/
     fun recognize(first_bitmap: Bitmap): List<Recognition> {
         val result = Array(BATCH_SIZE) { FloatArray(labels.size) }
 
@@ -52,10 +51,10 @@ class Classifier(assetManager: AssetManager) {
         }
 
         model.run(byteBuffer, result)
-        return parseResults(result)
+        return returnResults(result)
     }
-
-    private fun parseResults(result: Array<FloatArray>): List<Recognition> {
+    /*Function which take 3 best recognition and joined them with propabilities*/
+    private fun returnResults(result: Array<FloatArray>): List<Recognition> {
 
         val recognitions = mutableListOf<Recognition>()
 
@@ -67,9 +66,9 @@ class Classifier(assetManager: AssetManager) {
 
         return recognitions.sortedByDescending{ it.probability }.take(3)
     }
-
+    /*Made by using TensorFlow site*/
     @Throws(IOException::class)
-    private fun getModelByteBuffer(assetManager: AssetManager, modelPath: String): ByteBuffer {
+    private fun getModel(assetManager: AssetManager, modelPath: String): ByteBuffer {
         val fileDescriptor = assetManager.openFd(modelPath)
         val inputStream = FileInputStream(fileDescriptor.fileDescriptor)
         val fileChannel = inputStream.channel
@@ -78,7 +77,7 @@ class Classifier(assetManager: AssetManager) {
         return fileChannel.map(FileChannel.MapMode.READ_ONLY, startOffset, declaredLength)
             .asReadOnlyBuffer()
     }
-
+    /*Saving Labels in list from txt*/
     @Throws(IOException::class)
     private fun getLabels(assetManager: AssetManager, labelPath: String): List<String> {
         val labels = ArrayList<String>()
@@ -90,7 +89,7 @@ class Classifier(assetManager: AssetManager) {
         reader.close()
         return labels
     }
-
+    /*Useful const*/
     companion object {
         private const val BATCH_SIZE = 1 // process only 1 image at a time
         private const val MODEL_INPUT_SIZE = 224 // 224x224
