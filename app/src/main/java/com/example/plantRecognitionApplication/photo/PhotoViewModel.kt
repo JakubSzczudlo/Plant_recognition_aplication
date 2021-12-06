@@ -2,6 +2,7 @@ package com.example.plantRecognitionApplication.photo
 
 import android.content.Context
 import android.graphics.Bitmap
+import android.icu.text.DateFormat.getDateInstance
 import android.net.Uri
 import android.os.Environment
 import android.util.Log
@@ -11,8 +12,8 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import java.io.File
 import java.io.IOException
-import java.text.SimpleDateFormat
-import java.util.*
+import android.graphics.BitmapFactory
+
 
 class PhotoViewModel : ViewModel() {
     private val _bitmapPhoto = MutableLiveData<Bitmap>()
@@ -20,9 +21,10 @@ class PhotoViewModel : ViewModel() {
     private val _pathToPhoto = MutableLiveData<String>()
     private val _exception = MutableLiveData<String>()
     private val _photoURI = MutableLiveData<Uri>()
-    val bitmap_photo: LiveData<Bitmap>
+    private val _recflag = MutableLiveData<Boolean>()
+    val bitmapPhoto: LiveData<Bitmap>
         get() = _bitmapPhoto
-    val photo_flag: LiveData<Boolean>
+    val photoFlag: LiveData<Boolean>
         get() = _photoFlag
     val pathToPhoto: LiveData<String>
         get() = _pathToPhoto
@@ -30,22 +32,32 @@ class PhotoViewModel : ViewModel() {
         get() = _exception
     val photoURI: LiveData<Uri>
         get() = _photoURI
+    val recflag: LiveData<Boolean>
+        get() = _recflag
 
     init {
         Log.i("GameViewModel", "GameViewModel created!")
+
     }
+    fun photoViewed(){
+        _photoFlag.value = false
+        _recflag.value = true
+    }
+
+
 
     override fun onCleared() {
         super.onCleared()
         Log.i("GameViewModel", "GameViewModel destroyed!")
+
     }
 
 
     @Throws(IOException::class)
-    private fun createImageFile(context: Context?): File {
+    private fun createImageFile(context: Context): File {
         // Create an image file name
-        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
-        val storageDir: File? = context?.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        val timeStamp: String = getDateInstance().toString()
+        val storageDir: File? = context.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
             "JPEG_${timeStamp}_", /* prefix */
             ".jpg", /* suffix */
@@ -75,6 +87,14 @@ class PhotoViewModel : ViewModel() {
                     _photoFlag.value = true
                 }
             }
+
+    fun makeRecognitions(classifier: Classifier): String {
+        var bitmap = BitmapFactory.decodeFile(_pathToPhoto.value)
+        val recognitions = classifier.recognize(bitmap)
+        return recognitions.joinToString(separator = "\n")
+    }
+
+
 }
 
 

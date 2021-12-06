@@ -26,33 +26,45 @@
             app:layout_constraintHorizontal_bias="0.498"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintVertical_bias="0.046" />
-
-        <Button
-            android:id="@+id/viewPhotoButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="@string/viewPhoto"
-            app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintHorizontal_bias="0.496"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/takeImageButton"
-            app:layout_constraintVertical_bias="0.044" />
+            app:layout_constraintVertical_bias="0.039" />
 
         <ImageView
             android:id="@+id/imageView"
             android:layout_width="344dp"
             android:layout_height="517dp"
-            android:layout_marginBottom="24dp"
+            android:layout_marginBottom="128dp"
             android:src="@drawable/ic_launcher_foreground"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintHorizontal_bias="0.492"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/viewPhotoButton"
-            app:layout_constraintVertical_bias="1.0"
             app:srcCompat="@drawable/ic_launcher_background" />
+
+        <TextView
+            android:id="@+id/results"
+            android:layout_width="341dp"
+            android:layout_height="82dp"
+            android:layout_marginTop="8dp"
+            android:textAlignment="center"
+            app:layout_constraintBottom_toBottomOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.921" />
+
+        <TextView
+            android:id="@+id/Result_title"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:text="@string/Result_title"
+            android:visibility="invisible"
+            app:layout_constraintBottom_toTopOf="@+id/results"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintHorizontal_bias="0.498"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@+id/imageView"
+            app:layout_constraintVertical_bias="0.312" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>

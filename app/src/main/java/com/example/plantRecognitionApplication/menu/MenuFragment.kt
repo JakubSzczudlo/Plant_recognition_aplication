@@ -24,6 +24,9 @@ class MenuFragment : Fragment() {
         binding.startButton.setOnClickListener { v: View ->
             v.findNavController().navigate(R.id.action_menuFragment_to_photoFragment)
         }
+        binding.aboutButton.setOnClickListener { v: View ->
+            v.findNavController().navigate(R.id.action_menuFragment_to_aboutFragment)
+        }
         return binding.root
     }
 
